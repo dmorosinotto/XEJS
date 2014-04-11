@@ -1,0 +1,85 @@
+/**
+ * Black theme for reveal.js.
+ * 
+ * Copyright (C) 2011-2012 Hakim El Hattab, http://hakim.se
+ */
+
+
+// Default mixins and settings -----------------
+@import "../template/mixins";
+@import "../template/settings";
+// ---------------------------------------------
+
+
+// Include theme-specific fonts
+@import url(http://fonts.googleapis.com/css?family=Montserrat:700);
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:400,700,400italic,700italic);
+
+
+// Override theme settings (see ../template/settings.scss)
+
+$backgroundColor: #fff;
+$mainFont: 'Open Sans', Times, 'Times New Roman', serif;
+$mainColor: #000;
+$linkColor: #ffc06a;
+$linkColorHover: darken( $linkColor, 20% );
+$headingColor: #ff9900;
+$headingFont: 'Montserrat', Impact, sans-serif;
+$headingTextShadow: none;
+$headingLetterSpacing: -0.03em;
+$headingTextTransform: none;
+$selectionBackgroundColor: lighten( $linkColor, 20% );
+$mainFontSize: 30px;
+
+
+// Theme template ------------------------------
+@import "../template/theme";
+// ---------------------------------------------
+
+
+// BACKGROUND FULLSIZE BASED ON <section data-state="intro|demo|feedback">
+html.intro body
+{
+    	background:url("../../images/INTRO.PNG");
+		background-position:center;
+		background-size: 100% 100%;
+}
+
+html.demo body
+{
+    	background:url("../../images/DEMO.PNG");
+		background-position:center;
+		background-size: 100% 100%;
+}
+
+html.feedback body
+{
+    	background:url("../../images/FEEDBACK.PNG");
+		background-position:center;
+		background-size: 100% 100%;
+}
+
+html body 
+{
+    	background:url("../../images/XE.PNG");
+		background-position:center;
+		background-size: 100% 100%;
+}
+
+// TOLGO APICI DAL QUOTE
+.reveal blockquote {
+	width: 80%;
+	margin: 5px auto;
+	padding: 5px;
+
+}
+	.reveal blockquote p:first-child,
+	.reveal blockquote p:last-child {
+		display: inline-block;
+	}
+	.reveal blockquote:before {
+		content: '';
+	}
+	.reveal blockquote:after {
+		content: '';
+	}

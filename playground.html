@@ -1,0 +1,110 @@
+﻿<!doctype html>
+<html lang="it">
+<head>
+	<meta charset="utf-8">
+
+	<title>Javascript Playground</title>
+
+	<meta name="description" content="Esempi di Javascript">
+	<meta name="author" content="Daniele Morosinotto">
+
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+	<link rel="stylesheet" href="css/jscodepad.css">
+	
+	<style>
+		body { 
+			background: url('image/DEMO.png') no-repeat center center fixed;
+			background-position:center;
+			background-size: 100% 100%;
+			-moz-background-size: cover;
+			-webkit-background-size: cover;
+			-o-background-size: cover;
+		} 
+	</style>
+
+	<!-- Javascript Console Pad -->
+	<script src="js/jscodepad.js"></script>
+	<script src="lib/ace/ace.js"></script>
+	
+	<!--[if lt IE 9]>
+	<script src="lib/js/html5shiv.js"></script>
+	<![endif]-->	
+</head>
+<body>
+
+
+<div id="testground">
+  <div class="mask">
+  </div>
+
+  <div class="pad" data-type="codepad">
+	<div class="closeButton">╋</div>
+	
+	<div class="container">
+	
+	  <div class="console">
+		<div class="title">Javascript Console</div>
+		<div class="switchToPad switchbutton"> Go to Playground</div>
+		<div class="JSConsole">
+		  <div class="output" editable="true"> </div>
+		  <input type="text"></input>
+		</div>
+	  </div>
+
+	  <div class="codepad">
+		<div class="title">Javascript Playground &nbsp; 
+			<select id="chooseSamples">
+				<option value="">Choose a Sample...</option>
+				<option value="js/samples/value_ref.js">Passaggio per valore/referenza</option>
+				<option value="js/samples/convert.js">Conversione tra tipi</option>
+				<option value="js/samples/default_guard.js">Short-circuit && ||</option>
+				<option value="js/samples/wrapper.js">Wrapper primitives</option>
+				<option value="js/samples/special.js">Wrapper special</option>
+				<option value="js/samples/array.js">Utilizzo Array</option>
+				<option value="js/samples/monkey_patching.js">Monkey patching</option>
+				<option value="js/samples/dynamic_reflection.js">Dynamic + Reflection</option>
+				<option value="js/samples/this_method.js">this - Method Invocation</option>
+				<option value="js/samples/prototype.js">prototype Object.create()</option>
+				<option value="js/samples/prototypechain.js">Prototype-Chain</option>
+				<option value="js/samples/protomodel_0.js">Prototype = behaviour</option>
+				<option value="js/samples/protomodel_1.js">Polimorfismo dei metodi</option>
+				<option value="js/samples/protomodel_2.js">Prototype+Polimorfismo</option>
+				<option value="js/samples/protomodel_3.js">Constructor</option>
+				<option value="js/samples/protomodel_4.js">Prototypal Model completo</option>
+				<option value="js/samples/classmodel_1.js">Classiscal Model uso new</option>
+				<option value="js/samples/classmodel_2.js">Classiscal Model completo</option>
+				<option value="js/samples/hoisting.js">Hoisting delle variabili</option>
+				<option value="js/samples/closure.js">Esempio di Closure</option>
+				<option value="js/samples/iife_privacy.js">IIFE + Privacy</option>
+				<option value="js/samples/revealing.js">Revealing Module</option>
+				<option value="js/samples/typeof_instanceof.js">typeof + instanceof</option>
+				<option value="js/samples/unittest.js">XE.js Unit Test</option>
+				<option value="js/samples/xe.js">XE.js Reflection Module</option>
+			<select>
+		</div>
+		<div class="switchToConsole switchbutton"> Switch To Console</div>
+		<div class="JSCodePad" >
+		  <xmp id="jsPlayground" class="code" style="text-align:left; line-height:normal;">
+//1. Prima caricare XE.js Reflection Module
+//2. poi iniziallizzarlo con una delle seguenti chiamate:
+//   XE.showJSON();
+//	 XE.showData(true);
+//	 XE.showMethods(true);
+//3. Usare ___.xè();
+		  </xmp>
+		  <div class="output" editable="true"> </div>
+		  <div class="run">run</div>
+		</div>
+	  </div>
+	  
+	</div>
+  </div>
+
+  <div class="startButton">
+  </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,938 @@
+﻿<!doctype html>
+<html lang="it">
+<head>
+	<meta charset="utf-8">
+
+	<title>Pragmatic Javascript</title>
+
+	<meta name="description" content="Un introduzione a Javascript">
+	<meta name="author" content="Daniele Morosinotto">
+
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+	<link rel="stylesheet" href="css/reveal.min.css">
+	<link rel="stylesheet" href="css/jscodepad.css">
+	<link rel="stylesheet" href="css/theme/xe.css" id="theme">
+
+	<!-- For syntax highlighting -->
+	<link rel="stylesheet" href="lib/css/eclipse.css">
+
+	<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+	<script>
+		if( window.location.search.match( /print-pdf/gi ) ) {
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = 'css/print/pdf.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		}
+	</script>
+
+	<!-- Javascript Console Pad -->
+	<script src="js/jscodepad.js"></script>
+	<script src="lib/ace/ace.js"></script>
+
+	<!--[if lt IE 9]>
+	<script src="lib/js/html5shiv.js"></script>
+	<![endif]-->
+		
+</head>
+<body>
+<div class="reveal">
+	<!-- Any section element inside of this container is displayed as a slide -->
+	<div class="slides">
+	<section>
+		<section data-state="intro">
+			<br/>
+			<h2>Pragmatic Javascript</h2>
+			<h3>Un introduzione a Javascript </h3>
+			<p>by Daniele Morosinotto</p>
+			
+			<small>Slide Online: <a href="http://dmorosinotto.github.io/XEJS">http://dmorosinotto.github.io/XEJS</a></small>
+		</section>
+		<section>
+			<img src="images/Who.gif" />
+			<h3>DISCLAIMER</h3>
+			<blockquote>Io non sono un geek, nerd o guru di JS
+			<br/> lo sto scoprendo giorno per giorno 
+			<br/>(e nel mio tempo libero)
+			<br/>Ma mi sta veramente <b>appassionando</b>!!!</quote>
+		</section>
+	</section>		
+	
+<section data-markdown data-separator="^\n===\n$" data-vertical="^\n---\n">
+<script type="text/template">
+#Introduzione
+
+---
+
+## Un po' di storia
+- Creato da [Brendan Hich](https://twitter.com/BrendanEich) (*Netscape*) in **10 giorni** nel 1996
+- Basato su concetti derivati da: *Java* , *Scheme* e *Self*	
+- Inizialmente fu battezzato come Livescript, poi Netscape ottiene i diritti esclusivi da Sun per chiamarlo **Javascript**
+- Introdotto ("copiato") da Microsoft in IE 3.0 con il nome di **JScript**
+- Standardizzazione sotto il nome di **ECMAScript** nel 1997
+- European Computer Manufactorers Association
+	- 1999 **ES3** Standardizzazione base di Javascript
+	- 2009 **ES5** Intoduzione Strict Mode
+	- **2014? ES6 Harmony** tante nuove cose: *class, generators, promise, arrow function, rest parameters, observable,* etc...
+- Evoluzione Javascript / Web "dinamico"<!-- .element: class="fragment current-visible" -->
+	- 2000 IE5 XMLHTTP (Outlook Web Access)
+	- 2005 Gmail/GoogleMap (AJAX boom!)
+	- 2010 Framework Client/Server side
+
+---
+
+##Perchè Javascript?
+
+> Forse è uno dei pochi linguaggi veramente
+
+> **portabile e universale**!
+
+Non può essere ignorato, perchè ormai ha un'adozzione enorme non solo **client-side** ma anche **server-side** grazie a *node.js*.
+
+Sta dimostrando ogni giorno di più, che può essere alla base di "Sviluppi Reali" grazie alla ricchezza di **Framework Applicativi** 
+scritti in Javascript che ne sfruttano caratteristiche e potenzialità!
+
+---
+
+##Caratteristiche Linguaggio:
+- E' un linguaggio di **scripting** (quindi interpretato), con sintassi derivata 
+da **Java/C** che ne rende facile l'adozione. <small>("purtroppo")</small>
+
+- **Dynamic typing** che non vuol dire che è senza tipi, anzi!
+<br/> Ma i tipi sono associati ai *value* non alle variabili.
+
+- **Prototype-base** ereditarieta/estensibilita basata sul prototipo.
+<br/> Tramite la quale possiamo simulare anche l'object-oriented!
+
+- **First-class functions** consente paradigmi di prog. funzionale.
+<br/> Ma è possibile usare anche altri stili di prog. imperativa e OOP.
+
+===
+
+#I Tipi
+![](images/JSTypes.gif)
+
+---
+
+## Primitive vs Objects
+![](images/Primitives.gif)
+
+---
+
+## null e undefined
+
+> Sono due tipi che identificano 
+>
+> l' **assenza di valore**
+
+- **null**: viene tipicamente utilizzato quando si vuole settare una variabile ad un valore *"non previsto" o speciale*.
+- **undefined**
+	- è il *valore di default* di qualsiasi *variabile NON inizializzata*.
+	- è il valore che *viene ritornato* quando si cerca di accedere ad una *proprietà/membro* di un oggetto che *NON esiste*!
+	- è il valore che un *parametro assume* quando *NON viene passato* ad una funzione.
+
+---
+
+##Booleani
+Possibili valori Literal: *- **true** - **false** *
+
+<br/>
+**"Falsy"** ossia espressioni che vengono valutate **false**:
+
+- *false*
+- *null*
+- *undefined*
+- *""*  (stringa vuota)
+- *0* 
+- *NaN*
+
+- Tutti gli altri valori sono **"Truthy"** ossia valutati **true**
+
+(inclusi tutti gli oggetti, gli array e qualsiasi stringa non vuota)
+*Attenzione ai confronti! **If** e **==** fà coercizione [casi strani](http://dorey.github.io/JavaScript-Equality-Table/) usare **===** *
+
+---
+
+## Stringhe
+- Stringhe Unicode (UTF-16) delimitate da apici **'stringa'** o doppi-apici **"stringa"**
+- Caratteri speciali: **\n** (newline) **\r** (carriage return) **\f** (formfeed) **\t** (tab) **\b** (backspace) **\\\\** (backslash)
+- Escaping degli apici: **\'**  e  **\"**	
+```javascript
+"l'escaping \"non cambia\" la stringa!" === 'l\'escaping "non cambia" la stringa!' //TRUE
+```
+- Altri caratteri unicode: **\uHHHH**
+```javascript
+var copyright = '\u00A9';
+```
+- Propriet&agrave; s**.length**  =  numero di caratteri presenti nella stringa
+- Sono **IMMUTABLE** , volendo si puo' accedere in read-only ai singoli caratteri  *s[idx]* con *idx=0.. length-1*
+```javascript
+var s = 'ciao';
+console.log(s[s.length-1] + " e' = o");
+```
+
+---
+
+##Numeri
+In Javascript esiste un solo tipo numerico:
+
+ * **64-bit floating point** ([IEEE-754](http://bartaz.github.io/ieee754-visualization/))
+ * Non ci sono specifici tipi Interi
+ * Ci sono alcuni valori "speciali"
+	- *NaN*
+	- *Infinity*
+	- *-Infinity*
+
+Alcuni "problemi" di rappresentazione 0.1+0.2 == 0.3 //[FALSE](https://speakerdeck.com/bartoszopka/everything-you-never-wanted-to-know-about-javascript-numbers)
+<div class="JSConsole">
+  <div class="output" style="height: 100px;" editable="true"> </div>
+  <input type="text" value="-1/0"></input>
+</div>	
+
+---
+
+## Number Literal
+Si possono usare diverse notazioni per esprimere un numero:
+
+- Interi *123 	oppure	-456*
+- Decimale *1.23*
+- Esponenziale	*-56.789e-4*
+- Esadecimale	*0xFF*
+- Ottale *077*	- Attenzione: NON e' disponibile in ES5 Strict!
+
+<div class="JSCodePad" style=" height:220px;">
+<xmp class="code" style="text-align:left; line-height:normal;">
+//Numeri interi
+console.log(123);
+console.log(-456);
+//Valori decimali
+console.log(1.23);
+console.log(-56.789e-4);
+//Esadecimale e Ottale
+console.log(0xFF);	//255
+console.log(077); 	//63
+</xmp>
+<div class="output" editable="true"> </div>
+<div class="run">run</div>
+</div>
+
+===
+
+#Tutto il resto e' Object
+
+---
+
+### Alcune caratteristiche degli Oggetti:
+
+- Sono essenzialmente **elenco di coppie key-value** , vengono anche detti *"array associativi" , "hash" , "map" o "dictionary"* 
+	- **key**: è un identificatore **stringa** (CASE SENSITIVE, e può iniziare con alfanumerici _ $ oppure qualsiasi altra 'stringa' tra **''**)
+	- **value**: un valore di **qualsiasi tipo**, non solo primitive, ma anche altri Oggetti o "Special"!
+	
+- Sono **Dynamic** perche' e' possibile *aggiungere/togliere membri* (proprietà o metodi) all'Oggetto in ogni momento!
+
+- **NON vengono definiti a partire da "Classi"** al contrario di .NET (e altri linguaggi OOP) non esiste *"strict Type Checking"*!
+
+- Sono basati sul **Prototype** e grazie a questo e' possibile *estendere ed ereditare Oggetti da altri Oggetti*!
+
+---
+
+## Object Literal
+
+![](images/Objects.gif)
+
+---
+
+###Dynamic: Aggiungere/togliere membri
+- GETTER: *var x =* **obj.prop**; oppure *var y =* **obj["prop"]**;
+	- NOTA: Se si accede ad una proprietà che non esistente ritorna *undefined*!
+- SETTER: **obj.prop** *=x;* oppure **obj["prop"]** *=y;* 
+	- NOTA: Se si inizializza una nuova proprietà (chiave non esiste) questa viene immediatamente aggiunta all'oggetto!
+- DELETE: Si può cancellare il valore di una proprietà settandogli *obj.prop =* **undefined**; o addiritura rimuoverla completamente dall'oggetto usando **delete obj["prop"];**
+- REFLECTION: E' possibile elencare tutti i membri di un oggetto (anche quelli ereditati) con * **for** (k **in** obj) {... obj[k] ...} *
+<a href="javascript:XE_LoadSample('js/samples/dynamic_reflection.js')">ESEMPIO</a>
+Per testare l'esistenza di un membro si può usare * **if** ("prop" **in** obj) {...}* oppure * **if** (obj**.hasOwnProperty**("prop")) {* //se si vuole solo i diretti
+
+---
+
+##I Metodi
+Sono delle funzioni inserite come membro di un oggetto:
+![](images/Method.gif)
+
+- Possibile perche' le ***function*** in Javascript sono ***first-class object***!
+- All'interno del metodo posso usare ***this*** per accedere agli altri membri dell'oggetto!
+
+---
+
+####*this* - Methods Invocation (1/3)
+> Quando invoco una funzione come metodo di un oggetto 
+> **this** viene inizializzato con un puntatore all'oggetto!
+
+![](images/ThisMethod_1.gif)
+
+<a href="javascript:XE_LoadSample('js/samples/this_method.js')">ESEMPIO</a>
+
+---
+
+####*this* - Methods Invocation (2/3)
+> this è il contesto di invocazione NON un oggetto specifico!
+> Questo ci permette di riutilizzare la stessa funzione con oggetti diversi! 
+
+![](images/ThisMethod_2.gif)
+
+<a href="javascript:XE_LoadSample('js/samples/this_method.js')">ESEMPIO</a>
+
+---
+
+####*this* - Methods Invocation (3/3)
+> ATTENZIONE: Se richiamo direttamente la funzione, il **this** NON è assegnato!
+
+![](images/ThisMethod_3.gif)
+
+Se sono in **"strict mode";** allora *this = undefined*, altrimenti *this* è l'oggetto *globale*!
+In ogni caso ho comportamenti errati ed errori!
+
+<a href="javascript:XE_LoadSample('js/samples/this_method.js')">ESEMPIO</a>
+
+===
+
+## Prototype
+- In Javascript un Oggetto può *ereditare* o meglio *estendere direttamente* un'altro Oggetto, questo grazie al **prototype**.
+- E' possibile creare un oggetto con **Object.create(proto)**;
+
+```javascript
+var objEreditato = Object.create(objPrototipoBase);
+//objEreditato viene creato e la Prototype-Chain viene inizializzata 
+//in modo che objPrototipoBase sia il *prototype* di objEreditato!
+```
+- Creando gli oggetti in questo modo viene esplicitamente inizializzata la **Prototype-Chain**.
+- Anche se creiamo l'oggeto in altri modi (ex: Literal **{}**), implicitamente tutti gli oggetti ereditano da **Object**.
+- E' possibile ricavare a run-time il prototype in ES5 grazie a **Object.getPrototypeOf**( *obj* ) oppure tramite *obj* **.\_\_proto\_\_**
+
+---
+
+####Prototype (1/3)
+
+![](images/Prototype_1.gif)
+Partiamo creando un semplice oggetto con un valore (*val*) e un metodo (*get*) definendo direttamente un *Object Literal*.
+<a href="javascript:XE_LoadSample('js/samples/prototype.js')">ESEMPIO</a>
+
+---
+
+####Prototype (2/3)
+
+![](images/Prototype_2.gif)
+Definiamo un secondo oggetto (*child*) a partire dal primo usando **Object.create(...)**;
+E passando appunto il primo oggetto (*parent*) come **prototype** del nuovo oggetto.
+Andiamo inoltre ad inizializzare il valore dell'oggetto appena creato.
+<a href="javascript:XE_LoadSample('js/samples/prototype.js')">ESEMPIO</a>
+
+---
+
+####Prototype (3/3)
+
+![](images/Prototype_3.gif)
+In fine creiamo un ulteriore oggetto (*grandchild*) sempre tramite **Object.create** a partire dal secondo che abbiamo creato (*child*)
+In questo modo abbiamo creato una catena di relazioni *"padre-figlio"* che viene denominata **Prototype-Chain**!
+<a href="javascript:XE_LoadSample('js/samples/prototype.js')">ESEMPIO</a>
+
+---
+
+###Prototype-Chain (1/3)
+
+![](images/PrototypeChain_1.gif)
+
+La *Prototype-Chain* viene utilizzata da Javascript per risolvere l'accesso ai membri dell'oggetto.
+<a href="javascript:XE_LoadSample('js/samples/prototypechain.js')">ESEMPIO</a>
+
+---
+
+###Prototype-Chain (2/3)
+
+![](images/PrototypeChain_2.gif)
+
+Se un membro non viene trovato all'inteno dell'oggetto, Javascript tenta di trovarlo negli oggetti padre risalendo la Prototype-Chain.
+<a href="javascript:XE_LoadSample('js/samples/prototypechain.js')">ESEMPIO</a>
+
+---
+
+###Prototype-Chain (3/3)
+
+> Questo meccanismo è alla base dell'ereditarietà o meglio dell'estendibilità di Javascript!
+
+![](images/PrototypeChain_3.gif)
+Il modello di ereditarietà prototipale e' a volte chiamato **"Ereditarietà Differenziale"** perchè si basa sulla *"DELEGA"*. 
+Si costruisce un nuovo oggetto sulla base di un'altro - e poi si va a definire ciò che lo differenzia da quello di partenza!
+<a href="javascript:XE_LoadSample('js/samples/prototypechain.js')">ESEMPIO</a>
+
+===
+
+## Prototype = behaviour
+
+Utilizziamo il **Prototype** per definire e riutilizzare i **metodi** (*behavior*) dell'oggetto
+separandoli dai **dati** (*stato dell'oggetto*).
+
+![PM_Behaviour.gif](images/PM_Behaviour_code.gif)
+<a href="javascript:XE_LoadSample('js/samples/protomodel_0.js')">ESEMPIO</a>
+
+---
+
+### Polimorfismo (1/4)
+Vediamo come fare **polimorfismo** in Javascript: ossia *ridefine*/specializzare *un metodo* in un'oggetto ereditato.
+
+![](images/PM_Polimorfism_code.gif)
+<a href="javascript:XE_LoadSample('js/samples/protomodel_1.js')">ESEMPIO</a>
+
+---
+
+### Polimorfismo (2/4)
+
+![](images/PM_Polimorfism_dup.gif)
+Abbiamo un problema di *"riutilizzo del codice"*,
+
+vedremo come risolverlo... <a href="javascript:XE_LoadSample('js/samples/protomodel_1.js')">ESEMPIO</a>
+
+---
+
+### Polimorfismo (3/4)
+
+![](images/PM_Polimorfism_ko.gif)
+Se cerchiamo di eseguire direttamente il metodo dell'oggetto base,
+abbiamo il problema del **this** che cambia e *perdiamo il contesto*!
+<a href="javascript:XE_LoadSample('js/samples/protomodel_1.js')">ESEMPIO</a>
+
+---
+
+### Polimorfismo (4/4)
+La soluzione è utilizzare l'**Invocazione Esplicita** delle funzioni, che ci permette di specifare direttamente il **this**.
+
+***func.call(thisObj*** *, arg0, arg1, ...);*	//esegue la funzione settando *thisObj* come **contesto** e passando eventuali 
+altri argomenti.
+
+![](images/PM_Polimorfism_OK.gif)
+<a href="javascript:XE_LoadSample('js/samples/protomodel_1.js')">ESEMPIO</a>
+
+---
+
+### Creiamo qualche oggetto...
+Separando in modo netto i **dati** (*lo stato*) dai **metodi** (*behaviour*) e sfruttando i meccanismi nativi di Javascript 
+riusciamo a creare nuovi oggetti *"in modo differenziale"* riutilizzando il codice!
+
+![PM_Inherit.gif](images/PM_Inherit_code.gif)
+<a href="javascript:XE_LoadSample('js/samples/protomodel_2.js')">ESEMPIO</a>
+
+---
+
+### Assomiglia a... OOP!
+
+![](images/PM_Inherit_OOP.gif)
+
+---
+
+### Manca ancora un pezzettino...
+Anche nella parte di "*inizializzazione*" dei dati (stato) abbiamo un problemino di riutilizzo del codice e di *incapsulamento*!
+
+![](images/PM_Instance_dup.gif)
+
+---
+
+### Il Costruttore
+
+Possiamo risolverlo creando nel Prototype una funzione che utilizziamo per *inizializzare lo stato* dell'oggetto (il **Costruttore**)
+Sfruttando il contesto **this** (passato dalla *method invocation*) per *agganciare i dati dinamicamente* all'oggetto che abbiamo creato.
+
+![](images/PM_Constructor.gif)
+
+<a href="javascript:XE_LoadSample('js/samples/protomodel_3.js')">ESEMPIO</a>
+
+---
+
+## Prototypal Model <small><a href="javascript:XE_LoadSample('js/samples/protomodel_4.js')">ESEMPIO</a></small>
+
+Possimo utilizzare lo stesso costruttore anche per inizializzare le istanze ereditate, visto che è raggiungibile tramite la PrototypChain!
+
+![](images/PM_Instance_OK.gif)
+
+===
+
+# Classical Model
+
+### Utilizzo del new
+
+In Javascript è talmente comune l'approccio di **Creare** un'*istanza* e poi **Inizializzarla** tramite una funzione (*Costruttore*)
+che esiste un apposito costrutto che riunisce le due operazioni.
+
+#### var obj =&nbsp; *new* &nbsp;Ctor(...);
+
+> **new** in realtà è un'altro modo di inizializzare il *contesto di invocazione* della funzione *Costruttore*! 
+
+---
+
+### Pseudo-codice del new
+
+Javascript semplicemente invoca il Costruttore, passandogli come **this** = nuova istanza creata a partire dal *prototype* della funzione.
+
+```javascript
+//PSEUODO-CODICE DEL NEW
+function new(func_Ctor, arguments) {
+  var newobj = Object.create(func_Ctor.prototype);  //creo l'oggetto ereditando 
+													//dal prototype del costruttore 	
+  var result = func_Ctor.apply(newobj, arguments);  //richiamo il costruttore originale 
+													//passandogli il nuovo oggetto come 
+													//contesto this + eventuali argomenti
+													//per inizializzare la nuova istanza
+  return (typeof result === 'object' && result) || newobj; 
+	//se il costruttore dell'oggetto produce qualche risultato lo ritorna, 
+	//altrimenti (tipicamente) ritorno il newobj creato e inizializzato come risultato
+}
+```
+
+---
+
+### "Ricetta" per creare oggetti:
+
+- Il **Costruttore** contiene il codice di inizializzazione che usa *this.propX=...;* per settare lo stato dell'oggetto (*senza return*)
+- I **Metodi** dell'oggetto sono spostati nel **prototype del Costruttore** in modo da essere condivisi con tutte le istanze.
+- Quando si deve **creare un'istanza** dell'oggetto si deve usare l'operatore **new** (in modo da avere il *this* corretto)!
+
+![](images/Classical_new.gif)
+<a href="javascript:XE_LoadSample('js/samples/classmodel_1.js')">ESEMPIO</a>
+
+---
+### Istanziazione Classica
+
+![](images/CM_Instance.gif)
+> Per convenzione il Costruttore ha la 1° lettera Maiuscola!
+<a href="javascript:XE_LoadSample('js/samples/classmodel_1.js')">ESEMPIO</a>
+
+---
+
+### "Ricetta" per l'ereditarietà:
+- Per gestire in modo corretto l'ereditarietà dobbiamo
+ settare la **Prototype-Chain** in modo tale da avere il 
+ *Figlio.prototype* che punta al *Padre.prototype*
+- Utilizziamo l'invocazione esplicita **.call(this,...)** per:
+	- richiamare il *costruttore Padre*	all'interno del *costruttore Figlio*
+	  in modo da inizializzare correttamente lo stato dell'oggetto.
+	- oppure quando abbiamo bisongo di fare l'*Override* di un metodo, *riutilizzando* il codice del *Padre*.
+
+![](images/Classical_Inherits.gif)
+<a href="javascript:XE_LoadSample('js/samples/classmodel_2.js')">ESEMPIO</a>
+
+---
+### Ereditarietà Classica
+
+![](images/CM_Inherits.gif)
+> La Prototype-Chain viene setta in modo da puntare Figlio.prototype -> Padre.prototype
+<a href="javascript:XE_LoadSample('js/samples/classmodel_2.js')">ESEMPIO</a>
+
+---
+
+## Prototypal vs Classical
+![](images/Prototypal_vs_Classical.gif)
+
+===
+
+# Built-in Objects
+
+---
+
+## Wrapper dei Primitive Types
+In verita anche i Primitive Types sono **first-class object** grazie agli oggetti Wrapper: 
+[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number), 
+[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)
+e [Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)
+
+- Hanno un **prototype** che contiene una serie di *metodi* con funzioni di utilita'/conversione 
+legate al tipo, ad esempio: *.toString(); .toFixed(ndec); .toLocaleString(loc,opt); .substring(start,end); .concat([arg]); .charAt(idx); *
+- Il **wrapping** avviene in **automatico** quando si cerca di usare uno di questi metodi <a href="javascript:XE_LoadSample('js/samples/wrapper.js')">ESEMPIO</a>
+- E' possibile estendere il prototype per aggiungere nuove funzionalità <a href="javascript:XE_LoadSample('js/samples/monkey_patching.js')">monkey-patching</a>
+- E' possibile usare il *Costruttore* dei wrapper per effettuare delle <a href="javascript:XE_LoadSample('js/samples/convert.js')">conversioni esplicite</a> di tipo
+- E' sconsigliato usare la sitassi *new Tipowrapper(val)* per creare oggetti e' meglio **usare** direttamente la sintassi **Literal**!
+
+---
+
+####Primitive Type sono assegnati / passati per valore <small>(copiati)</small>
+I valori originali non vengono modificati (copie **indipendenti**)!
+![](images/NumByValue.gif)
+
+####Tutti altri Object sono assegnati / passati per referenza <small>(puntatori)</small>
+Ci sono **side-effect** quando modifichiamo i valori, anche nelle funz!
+![](images/ObjByRef.gif)
+
+---
+
+## Date
+
+Sono derivate da Java e internamente rappresentano **Unix Epoch**
+il *numero di millisecondi* dal **01 Gennaio 1970 00:00:00 UTC**
+
+E' possibile ricare questo numero di millisecondi usando:
+
+- var Nms = **Date.parse** *(str);*	//parsing di una stringa formato data
+- var Nms = **Date.now** *();*		//data-ora corrente
+- var Nms = **Date.UTC** *(year,**mm**,day,...);*	//data-ora specifica
+
+
+#### Come utilizzare le Date:
+- Usiamo il costruttore per creare istanza **new Date(...);** //in UTC!!!
+- Possiamo manipolarle grazie ai metodi presenti <a href="javascript:XE_LoadSample('js/samples/special.js')">Date.prototype</a>
+- Però consiglio di usare libreria esterna [Moment.js](http://momentjs.com/)
+
+> ATTENZIONE: nelle funzioni *.getMonth(); .setMonth(**mm**);* o nel costruttore *new Date(year,**mm**,day,...)* il mese e' sempre espresso nell'intervallo **0=Gennaio..11=Dicembre** 
+
+---
+
+## Array
+
+####Array Literal &nbsp; *var arr = [itm1, itm2, ...];*
+- E' un elenco di elementi *NON necessariamente* dello stesso tipo!
+- In verità è un Object che ha **keys *= "indice"* ** elementi *0..length-1*
+- Ha una proptietà read-only **.length *= massimo indice+1* **
+- E' dinamico (come tutti gli oggetti in JS) <a href="javascript:XE_LoadSample('js/samples/array.js')">ESEMPIO</a>
+	- La **dimensione non è fissata** posso aggiungere o togliere elementi in ogni momento.
+	- Posso creare **array sparsi** assegnando direttamente elementi con qualsiasi indice!
+- **Array.prototype** contiene tutta serie di metodi per manipolare l'array alcuni sono distruttivi (*splice*), altri no (*slice*)!
+
+> ATTENZIONE: quando si utilizza il costruttore dell'oggetto *var arr =* **new Array(...);** 
+> perchè cambia comportamento in base tipo/numero parametri passati!!!
+>
+> Molto meglio usare il Literal **var arr = [...];**
+
+---
+
+### Qualsiasi cosa ha un prototype <br/> e deriva da Object.prototype!
+![](images/EverythingIsObj.gif)
+
+===
+
+# Function
+
+---
+
+### Function Expression
+```javascript
+function funcName(par1,par2...) { 
+	...  
+	return exp;
+}
+```
+
+- Una **Function Expression** è costituita da:
+	- parola chiave **function**
+	- *funcName* **nome** funzione **opzionale** 
+	- elenco di **parametri 0+** racchiuso tra **( , )** e separati da virgola
+	- **corpo** della funzione racchiuso tra ** { **...** } **
+		- contentente 0 o più istruzioni javascript 
+		- eventuale **return** (se non è presete ritorna *undefined*)
+		
+- Una **Function Expression** è praticamente il modo di definire un **Literal** *per un oggetto di tipo* **Function**!
+
+---
+
+### Function as Object
+* Quando javascript elabora una Function Expression crea un Nuovo oggetto che rappresenta la funzione con le proprietà:
+	- **.name** *= nome della funzione* 
+	- **.length** *= numero di parametri*
+	- **.prototype** che punta all' *"oggetto accopiato"* <*FN.prototype*>
+	- l'oggetto è derivato da **Function.prototype** che contiene i metodi per l'invocazione esplicita: *.call(), .apply() e .bind()*	
+
+![](images/FuncPrototype.gif)
+
+* Comportamento un pò strano: Oltre all'oggetto funzione, viene generato anche un' *"oggetto accopiato"* <**FN.prototype**> che ha una sola proprietà **.constructor** che punta alla funzione stessa.
+
+---
+
+### Function first-class object
+![](images/FuncIsObj.gif)
+
+- SONO OGGETTI A TUTTI GLI EFFETTI	
+	- E' possibile **agganciare dinamicamente proprietà** (o metodi) ad una funzione - ad esempio per creare delle costanti o static.
+	- Possono essere **assegnati ad una variabile**
+	- Possono essere **memorizzati in un oggetto**
+```javascript
+var obj ={ method: myFunction, ... }
+```	
+	- Possono essere il **valore di ritorno** di una funzione
+```javascript
+	return ( myFunction );
+```
+	- Possono essere **passati come parametri*.* ad una funzione
+```javascript
+function doSomething(callback) {... callback(); ...};
+```
+
+---
+
+## Parametri vs arguments
+* In Javascript nella dichiarazione della funzione vengono indicati i **parametri** che accetta in ingresso.
+```javascript
+function fn(par1,par2, ..., parM) { ... }; //NESSUN VINCOLO SUL TIPO O SULLA PRESENZA DEI PARAMETRI!!!
+```
+* Ogni funzione ha accesso ad **arguments** che contiene l'effettivo elenco degli **argomenti passati** all'atto dell'invocazione della funzione.
+```javascript
+fn(arg1,..., argN); //INVOCAZIONE DELLA FUNZIONE -> SETTA arguments = ELENCO EFFETTIVI ARGOMENTI PASSATI!!!
+```
+* E' infatti possibile eseguire la funzione invocandola con un numero qualsiasi di argomenti!	
+	- Se **N<M** i parametri mancanti sono inizializzati a **undefined**
+	- Se **N>=M** tutti i parametri assumono un valore, e l'eventuale "eccedenza" è disponibile tramite **arguments[N+1] ... arguments[M]**
+	- **arguments** è un array-like, ha solo la proprietà **.length** che indica il numero di argomenti effettivamente passati, ma NON eredita da *Array*!
+*TIPS: **var args = Array.prototype.splice.call(arguments,0);** *
+
+---
+
+## this Invocation Recap
+Ogni funzione ha accesso a **this** che come abbiamo visto è il *contesto di invocazione*
+ che viene inizializzato in base alla chiamata:
+
+```javascript
+//METHOD INVOCATION
+obj.method(...); //this = obj ossia l'oggetto da cui si invoca il metodo
+
+//NEW INVOCATION
+new fnCtor(...); //this = nuovo oggetto, creato a partire da fnCtor.prototype
+
+//DIRECT INVOCATION
+func(...);		//this = undefined se sono in "strict mode";   altrimenti è global
+				//ERRORE IN OGNI CASO!!!
+
+//EXPLICIT INVOCATION //this = thisObj , cambia il modo di passare gli argomenti!
+func.call(thisObj,arg0,arg1,...); //ARGOMENTI PASSATI UNO AD UNO
+func.apply(thisObj,[args]);       //ARGOMENTI PASSATI COME ARRAY
+var fb = func.bind(thisObj);      //RITORNA FUNZIONE CON IL THIS SETTATO
+fb(arg0,arg1,...);    //POI POSSO USARE DIRECT INVOCATION SENZA PROBLEMI
+```
+
+---
+
+## Variabili e Scope di Funzione
+
+In Javascript NON esiste il *{ block scope }* - Esiste solamente lo **Scope di Funzione** 
+che definisce il limite/contesto di visibilità/accessibilità:
+
+- **this** e **arguments** assegnati a run-time
+- i **parametri** esplicitati nella dichiarazione della function *(p1,p2,...)*
+- tutte le **variabili** definite *(var x; var y=...;)* nella funzione - Indipendentemente dalla posizione in cui 
+sono state dichiazione nel corpo della funzione (<a href="javascript:XE_LoadSample('js/samples/hoisting.js')">HOISTING</a> in testa alla funzione)
+- Inoltre lo scope **eredita lo scope del contenitore** ossia della funzione padre che la contiene lessicalmente
+	- Questo in modo ricorsivo ci permette di arrivare come visibilità fino all'oggetto **global / window**
+	- E inoltre nel caso in cui restituiamo una funzione interna possiamo catturare lo stato delle variabili padre tramite le 
+	<a href="javascript:XE_LoadSample('js/samples/closure.js')">CLOSURE</a>.
+
+===
+
+#Extras
+
+---
+
+### Tips & Tricks
+- Conversione tra tipi <a href="javascript:XE_LoadSample('js/samples/convert.js')">ESEMPIO</a>
+- Logical Short-Circuit && || <a href="javascript:XE_LoadSample('js/samples/default_guard.js')">ESEMPIO</a>
+
+<br/>
+
+### Utilizzi delle CLOSURE
+- <a href="javascript:XE_LoadSample('js/samples/iife_privacy.js')">IIFE</a> (Immediatly Invoked Function Expression) 
+- **Privacy** (simulo private sfruttando lo scope di funzione)
+- <a href="javascript:XE_LoadSample('js/samples/revealing.js')">Revealing Module</a> (pattern per realizzare "Namespace")
+
+
+---
+
+### Extra: "Reflection" ricavare infomazioni a run-time sugli Oggetti Javascript
+- Ogni oggetto ha un prototype
+	- Lo si ricava in ES5 con **Object.getPrototypeOf**( *obj* ) oppure tramite *obj* **.\_\_proto\_\_**
+	- Gli operatori **typeof** e **instanceof** ci permettono di ricavare informazioni runtime sul tipo <a href="javascript:XE_LoadSample('js/samples/typeof_instanceof.js')">ESEMPIO</a>
+- Possiamo ciclare tutti membri di un oggetto con * **for**(var k **in** obj) { ... obj[k] ...}	
+	- Attenzione perche' non e' garantito l'ordine in cui li ritorna e in piu' risale la Prototype-Chain
+- Tutti gli oggetti in ultima istanza ereditano da **Object.prototype** 
+	- ci mette a disposizione una serie di metodi generici es: * **.hasOwnProperty**(pName); **.toString**(); **.valueOf**();*
+- Mentre le funzioni ereditano **Function.prototype** (e a cascata da *Object.prototype*) 
+	- troviamo i metodi per l'invocazione: * **.call**(thisObj,arg0,arg1,...); **.apply**(thisObj,[args]); **.bind**(thisObj);*
+- Su queste basi ho scritto: 
+<a href="javascript:XE_LoadSample('js/samples/xe.js')">XE Reflection</a> +
+<a href="javascript:XE_LoadSample('js/samples/unittest.js')">UnitTest</a>
+
+---
+
+### Extra: ES6 class + extend
+
+In ES6 verrà introdotta la sintassi **class** + **extends** che internamente genererà il modello Classico
+solamente con una sintassi più OOP 
+![](images/ES6_Class_syntax.gif)
+
+---
+
+### Confronto Classical vs ES6
+![](images/ES6_vs_Classicall.gif)
+
+===
+
+#Suggerimenti
+
+---
+
+## Librerie
+- [Moment.js](http://momentjs.com/) libreria per manipolazione Date
+- [Underscore](http://underscorejs.org/) o [Lo-dash](http://lodash.com/) funzioni di utilità sugli Array alla LINQ
+- [Q.js](https://github.com/kriskowal/q) implementazione **Promise** per evitare callback hell
+- [JQuery](http://api.jquery.com/) accesso/modifica DOM cross-browser
+- [Knockout](http://knockoutjs.com/documentation/introduction.html) data binding client-side
+- [AngularJS](http://www.youtube.com/watch?v=i9MHigUZKEM) framework MVVM per SPA
+- [Node.js](http://nodejs.org/) Utilizzo di Javascript server-side
+	- [Express.js](http://expressjs.com/4x/api.html) Web application framework per Node.js
+	- [socket.io](http://socket.io/) Realtime Web App (=SignalR) per Node.js
+	- [Edge.js](https://github.com/tjanczuk/edge) Utilizzare .NET insieme a Javascript in Node.js
+
+---
+
+## Tools
+- **VISUAL STUDIO 2013** + [Web Essentials](http://visualstudiogallery.msdn.microsoft.com/6ed4c78f-a23e-49ad-b5fd-369af0c2107f)!!!
+	- [Typescript](http://www.typescriptlang.org/)
+	- [NTVS](https://nodejstools.codeplex.com/) Node Tools for Visual Studio
+- JetBrains WebStorm 8 + [spyjs](http://spy-js.com/)
+- F12 Developer Tools nei vari browser
+- Javascipt [Playground](playground.html) by Daniele Morosinotto :-)
+
+---
+
+## Riferimenti
+- [Object Playground](http://www.objectplayground.com/) sito eccezionale per capire il Prototype e OOP
+- Douglas Crockford autore Javascript GOOD PARTS [Video1](http://www.youtube.com/watch?v=RO1Wnu-xKoY) [Video2](http://www.youtube.com/watch?v=ya4UHuXNygM)
+- Spiegazione dell'[Hositing](http://www.adequatelygood.com/JavaScript-Scoping-and-Hoisting.html) delle variabili e funzioni in Javascript
+- Spiegazione del [this](https://thenewcircle.com/s/post/1564/context_or_the_this_keyword_in_javascript_tutorial) (contesto invocazione) in Javascript 
+- Alcuni [Design Patterns](http://addyosmani.com/resources/essentialjsdesignpatterns/book/) implementati in Javascript
+- [MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects) Documentazione online di tutti gli oggetti/metodi Built-in
+- Screencast introduttivo su Javacript by [Jianrong Yu](http://yujianrong.github.io/JavascriptTraining/#/)
+- Tutorial sui concetti di Javascript by [Mozilla](https://developer.mozilla.org/en-US/docs/Web/JavaScript/A_re-introduction_to_JavaScript)
+- [Google](http://google-styleguide.googlecode.com/svn/trunk/javascriptguide.xml ) Guida Javascript coding-style
+- Corso Javascript Basics [Microsoft Virtual Accademy](http://www.microsoftvirtualacademy.com/training-courses/javascript-fundamentals-for-absolute-beginners#?fbid=KahxTDg_Ba4)
+- Introduzione alle nuove funzionalità di [ECMAScript 6](http://blog.tastejs.com/rewriting-a-webapp-with-ecmascript-6/)
+
+</script>
+</section>
+
+<section>	
+	<section data-state="feedback">
+	  <h1>THE END</h1>
+	  <h3>by Daniele Morosinotto</h3>
+	  <br/>
+	  <h5>Contatti:</h5>
+	  <ul>
+		<li><a href="mailto:dmorosinotto@icloud.com">dmorosinotto@icloud.com</a></li>
+		<li>twiter <a href="https://twitter.com/dmorosinotto">@dmorosinotto</a></li>
+		<li>download <a href="http://1drv.ms/1oSwxXL">http://1drv.ms/1oSwxXL</a></li>
+	  <ul>	
+	  <br/>
+	  <small>Realizzato con <a href="http://lab.hakim.se/reveal-js">reveal.js</a> + <a href="http://ace.c9.io/">ace code editor</a>.</small>	  
+	</section>		  
+</section>
+
+	</div><!-- end slides -->
+</div><!-- end reveal -->
+
+
+<div id="testground">
+  <div class="mask">
+  </div>
+
+  <div class="pad" data-type="codepad">
+	<div class="closeButton">╋</div>
+	
+	<div class="container">
+	
+	  <div class="console">
+		<div class="title">Javascript Console</div>
+		<div class="switchToPad switchbutton"> Go to Playground</div>
+		<div class="JSConsole">
+		  <div class="output" editable="true"> </div>
+		  <input type="text"></input>
+		</div>
+	  </div>
+
+	  <div class="codepad">
+		<div class="title">Javascript Playground &nbsp; 
+			<select id="chooseSamples">
+				<option value="">Choose a Sample...</option>
+				<option value="js/samples/value_ref.js">Passaggio per valore/referenza</option>
+				<option value="js/samples/convert.js">Conversione tra tipi</option>
+				<option value="js/samples/default_guard.js">Short-circuit && ||</option>
+				<option value="js/samples/wrapper.js">Wrapper primitives</option>
+				<option value="js/samples/special.js">Wrapper special</option>
+				<option value="js/samples/array.js">Utilizzo Array</option>
+				<option value="js/samples/monkey_patching.js">Monkey patching</option>
+				<option value="js/samples/dynamic_reflection.js">Dynamic + Reflection</option>
+				<option value="js/samples/this_method.js">this - Method Invocation</option>
+				<option value="js/samples/prototype.js">prototype Object.create()</option>
+				<option value="js/samples/prototypechain.js">Prototype-Chain</option>
+				<option value="js/samples/protomodel_0.js">Prototype = behaviour</option>
+				<option value="js/samples/protomodel_1.js">Polimorfismo dei metodi</option>
+				<option value="js/samples/protomodel_2.js">Prototype+Polimorfismo</option>
+				<option value="js/samples/protomodel_3.js">Constructor</option>
+				<option value="js/samples/protomodel_4.js">Prototypal Model completo</option>
+				<option value="js/samples/classmodel_1.js">Classiscal Model uso new</option>
+				<option value="js/samples/classmodel_2.js">Classiscal Model completo</option>
+				<option value="js/samples/hoisting.js">Hoisting delle variabili</option>
+				<option value="js/samples/closure.js">Esempio di Closure</option>
+				<option value="js/samples/iife_privacy.js">IIFE + Privacy</option>
+				<option value="js/samples/revealing.js">Revealing Module</option>
+				<option value="js/samples/typeof_instanceof.js">typeof + instanceof</option>
+				<option value="js/samples/unittest.js">XE.js Unit Test</option>
+				<option value="js/samples/xe.js">XE.js Reflection Module</option>
+			<select>
+		</div>
+		<div class="switchToConsole switchbutton"> Switch To Console</div>
+		<div class="JSCodePad" >
+		  <xmp id="jsPlayground" class="code" style="text-align:left; line-height:normal;">
+//1. Prima caricare XE.js Reflection Module
+//2. poi iniziallizzarlo con una delle seguenti chiamate:
+//   XE.showJSON();
+//	 XE.showData(true);
+//	 XE.showMethods(true);
+//3. Usare ___.xè();
+		  </xmp>
+		  <div class="output" editable="true"> </div>
+		  <div class="run">run</div>
+		</div>
+	  </div>
+	  
+	</div>
+  </div>
+
+  <div class="startButton">
+  </div>
+</div>
+
+<script src="lib/js/head.min.js"></script>
+<script src="js/reveal.min.js"></script>
+
+<script>
+	// Full list of configuration options available here:
+	// https://github.com/hakimel/reveal.js#configuration
+	Reveal.initialize({
+		
+		controls: true,
+		progress: true,
+		history: true,
+		center: true,
+
+		theme: "xe", // available themes are in /css/theme
+		transition: Reveal.getQueryHash().transition || 'linear', // default/cube/page/concave/zoom/linear/none
+		
+		// Don't forget to add the dependencies
+		dependencies: [
+			{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+			{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+			{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+		]
+	});
+	
+	function showCode(n) {
+		
+	}
+</script>
+
+</body>
+</html>
