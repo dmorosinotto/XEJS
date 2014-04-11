@@ -719,7 +719,7 @@ sono state dichiazione nel corpo della funzione (<a href="javascript:XE_LoadSamp
 - Inoltre lo scope **eredita lo scope del contenitore** ossia della funzione padre che la contiene lessicalmente
 	- Questo in modo ricorsivo ci permette di arrivare come visibilità fino all'oggetto **global / window**
 	- E inoltre nel caso in cui restituiamo una funzione interna possiamo catturare lo stato delle variabili padre tramite le 
-	<a href="javascript:XE_LoadSample('js/samples/closure.js')">CLOSURE</a>.
+	<a href="javascript:XE_LoadSample('js/samples/closure.js')">CLOSURE</a>, <a href="javascript:XE_LoadSample('js/samples/that_this.js')">THAT=THIS</a>.
 
 ===
 
@@ -734,6 +734,7 @@ sono state dichiazione nel corpo della funzione (<a href="javascript:XE_LoadSamp
 <br/>
 
 ### Utilizzi delle CLOSURE
+- Trucchetto <a href="javascript:XE_LoadSample('js/samples/that_this.js')">var that=this</a>; per catturare il contesto esecuzione per una successiva callback
 - <a href="javascript:XE_LoadSample('js/samples/iife_privacy.js')">IIFE</a> (Immediatly Invoked Function Expression) 
 - **Privacy** (simulo private sfruttando lo scope di funzione)
 - <a href="javascript:XE_LoadSample('js/samples/revealing.js')">Revealing Module</a> (pattern per realizzare "Namespace")
@@ -876,6 +877,7 @@ solamente con una sintassi più OOP
 				<option value="js/samples/classmodel_2.js">Classiscal Model completo</option>
 				<option value="js/samples/hoisting.js">Hoisting delle variabili</option>
 				<option value="js/samples/closure.js">Esempio di Closure</option>
+				<option value="js/samples/that_this.js">Closure var that=this;</option>
 				<option value="js/samples/iife_privacy.js">IIFE + Privacy</option>
 				<option value="js/samples/revealing.js">Revealing Module</option>
 				<option value="js/samples/typeof_instanceof.js">typeof + instanceof</option>
