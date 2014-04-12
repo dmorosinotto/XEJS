@@ -677,7 +677,7 @@ fn(arg1,..., argN); //INVOCAZIONE DELLA FUNZIONE -> SETTA arguments = ELENCO EFF
 ```
 * E' infatti possibile eseguire la funzione invocandola con un numero qualsiasi di argomenti!	
 	- Se **N<M** i parametri mancanti sono inizializzati a **undefined**
-	- Se **N>=M** tutti i parametri assumono un valore, e l'eventuale "eccedenza" è disponibile tramite **arguments[N+1] ... arguments[M]**
+	- Se **N>=M** tutti i parametri assumono un valore, e l'eventuale "eccedenza" è disponibile tramite **arguments[M+1] ... arguments[N]**
 	- **arguments** è un array-like, ha solo la proprietà **.length** che indica il numero di argomenti effettivamente passati, ma NON eredita da *Array*!
 *TIPS: **var args = Array.prototype.splice.call(arguments,0);** *
 
